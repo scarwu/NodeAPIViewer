@@ -37,7 +37,8 @@ function printContent (data, level, cb) {
 
 				var desc = $('<div>');
 				if ('stability' in current) {
-					var stability = $('<pre><code>').html('Stability ' + current.stability + ': ' + current.stabilityText);
+					var stability = $('<pre>').html('<code>Stability ' + current.stability +
+						': ' + current.stabilityText + '</code>');
 					desc.append(stability);
 				}
 				desc.append(current.desc);
@@ -66,6 +67,12 @@ function selectItem () {
 	}
 }
 
+function contentResize () {
+	var content = $('div.content .block').last().css({
+		height: $('div.content').height() - 30
+	});
+}
+
 $(document).ready(function () {
 	getAPIData('index', function (data) {
 		$.each(data.desc, function (index) {
@@ -90,20 +97,15 @@ $('body').delegate('div.nav span', 'click', function () {
 	}, 750);
 
 	getAPIData($(this).attr('class').split(' ')[0], function (data) {
-		console.log(data);
 		printContent(data, 1, function () {
 			selectItem();
-			var content = $('div.content .block').last().css({
-				height: $('div.content').height()
-			});
+			contentResize();
 
 			for(var index = 0;index < $('div.item span').size();index++) {
 				$('div.item span').eq(index).attr('data-order', index);
 			}
 		});
-		
 	});
-
 }).delegate('div.item span', 'click', function () {
 	var index = $(this).attr('data-order');
 	var moveTo = $('div.content .block').eq(index).position().top - $('div.content .block').eq(0).position().top;
@@ -115,7 +117,5 @@ $('body').delegate('div.nav span', 'click', function () {
 
 $('div.content').on('scroll', function () {
 	selectItem();
-	var content = $('div.content .block').last().css({
-		height: $('div.content').height()
-	});
+	contentResize();
 });
