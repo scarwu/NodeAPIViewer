@@ -187,14 +187,14 @@ div.content {
 div.nav {
     background: #444;
     color: #111;
-    width: 240px;
+    width: 190px;
 }
 
 div.item {
-    left: 250px;
+    left: 200px;
     background: #333;
     color: #999;
-    width: 240px;
+    width: 290px;
 }
 
 .active_a,
@@ -236,6 +236,7 @@ div.content {
     color: #ccc;
     width: inherit;
     padding-left: 25px;
+    padding-top: 0;
 }
 
 /* ==========================================================================

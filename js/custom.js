@@ -27,8 +27,8 @@ function printContent (data) {
 	$.each(data, function (index) {
 		if (index in api_type) {
 			for(var order in data[index]) {
-				$('div.content').append('<h1>' + data[index][order].textRaw.replace('\\', '') + '</h1>');
-				$('div.content').append('<p>' + data[index][order].desc + '</p>');
+				$('div.content').append('<div><h1>' + data[index][order].textRaw.replace('\\', '') + '</h1>');
+				$('div.content').append(data[index][order].desc);
 
 				$('div.item').append('<span>' + data[index][order].textRaw.replace('\\', '') + '</span>');
 
