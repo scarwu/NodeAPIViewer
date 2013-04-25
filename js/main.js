@@ -28,33 +28,44 @@ function printContent (data, level, count) {
 		if (index in api_type) {
 			for(var order in data[index]) {
 				var current = data[index][order];
+
+				var div = $('<div>').attr('class', 'block');
 				var header = $('<h' + level + '>')
 					.html(current.textRaw.replace('\\', ''))
 					.attr('id', null);
-				
-				$('div.content').append(header);
+				div.append(header);
 
 				var desc = $('<div>');
-				
 				if ('stability' in current) {
 					var stability = $('<pre><code>').html('Stability ' + current.stability + ': ' + current.stabilityText);
 					desc.append(stability);
 				}
-
 				desc.append(current.desc);
-				$('div.content').append(desc);
+				div.append(desc);
 
-				var item = $('<span>').html(current.textRaw.replace('\\', ''));
+				$('div.content').append(div);
+
+				var item = $('<span>').html(current.textRaw.replace('\\', ''))
+					.attr('data-order', count++);
 				$('div.item').append(item);
 
-				printContent(current, level+1);
+				printContent(current, level + 1, count);
 			}
 		}
 	});
 }
 
-$(document).ready(function () {
+function selectItem() {
+	for (var index = 0;index < $('div.content .block').size();index++) {
+		var current = $('div.content .block').eq(index);
+		if(current.position().top >= 0) {
+			$('div.item span').eq(index).addClass('active_b').siblings().removeClass('active_b');
+			return;
+		}
+	}
+}
 
+$(document).ready(function () {
 	getAPIData('index', function (data) {
 		$.each(data.desc, function (index) {
 			var item = data.desc[index];
@@ -66,7 +77,6 @@ $(document).ready(function () {
 
 		$('div.nav span').eq(0).click();
 	});
-
 });
 
 $('body').delegate('div.nav span', 'click', function () {
@@ -77,10 +87,21 @@ $('body').delegate('div.nav span', 'click', function () {
 
 	getAPIData($(this).attr('class').split(' ')[0], function (data) {
 		console.log(data);
-		printContent (data, 1);
+		printContent(data, 1, 0);
+		selectItem();
 	});
 
 }).delegate('div.item span', 'click', function () {
-	console.log($(this).eq());
+	var index = $(this).attr('data-order');
+	var moveTo = $('div.content .block').eq(index).position().top;
 
+	console.log(moveTo);
+
+	$('div.content').stop().animate({
+		scrollTop: moveTo
+	}, 750);
+});
+
+$('div.content').on('scroll', function () {
+	selectItem();
 });

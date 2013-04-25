@@ -228,6 +228,7 @@ div.nav::-webkit-scrollbar-thumb {
     background: #333;
 }
 
+div.item::-webkit-scrollbar-corner,
 div.item::-webkit-scrollbar-thumb {
     background: #222;
 }
@@ -280,6 +281,7 @@ div.content {
 
 div.content h1 {
     border-bottom: 1px solid #666;
+    margin-top: 0;
 }
 
 div.content h2 {
