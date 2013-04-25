@@ -23,7 +23,7 @@ function getAPIData (target, cb) {
 	}
 }
 
-function printContent (data, level, count, cb) {
+function printContent (data, level, cb) {
 	for (var index in data) {
 		if (index in api_type) {
 			for(var order in data[index]) {
@@ -45,11 +45,10 @@ function printContent (data, level, count, cb) {
 
 				$('div.content').append(div);
 
-				var item = $('<span>').html(current.textRaw.replace('\\', ''))
-					.attr('data-order', count++);
+				var item = $('<span>').html(current.textRaw.replace('\\', ''));
 				$('div.item').append(item);
 
-				printContent(current, level + 1, count);
+				printContent(current, level + 1);
 			}
 		}
 	}
@@ -92,11 +91,15 @@ $('body').delegate('div.nav span', 'click', function () {
 
 	getAPIData($(this).attr('class').split(' ')[0], function (data) {
 		console.log(data);
-		printContent(data, 1, 0, function () {
+		printContent(data, 1, function () {
 			selectItem();
 			var content = $('div.content .block').last().css({
 				height: $('div.content').height()
 			});
+
+			for(var index = 0;index < $('div.item span').size();index++) {
+				$('div.item span').eq(index).attr('data-order', index);
+			}
 		});
 		
 	});
