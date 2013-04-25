@@ -16,12 +16,12 @@ button,
 input,
 select,
 textarea {
-	color: #222;
+    color: #222;
 }
 
 body {
-	font-size: 1em;
-	line-height: 1.4;
+    font-size: 1em;
+    line-height: 1.4;
 }
 
 /*
@@ -31,13 +31,13 @@ body {
  */
 
 ::-moz-selection {
-	background: #b3d4fc;
-	text-shadow: none;
+    background: #b3d4fc;
+    text-shadow: none;
 }
 
 ::selection {
-	background: #b3d4fc;
-	text-shadow: none;
+    background: #b3d4fc;
+    text-shadow: none;
 }
 
 /*
@@ -45,12 +45,12 @@ body {
  */
 
 hr {
-	display: block;
-	height: 1px;
-	border: 0;
-	border-top: 1px solid #ccc;
-	margin: 1em 0;
-	padding: 0;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }
 
 /*
@@ -58,7 +58,7 @@ hr {
  */
 
 img {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 /*
@@ -66,9 +66,9 @@ img {
  */
 
 fieldset {
-	border: 0;
-	margin: 0;
-	padding: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /*
@@ -76,7 +76,7 @@ fieldset {
  */
 
 textarea {
-	resize: vertical;
+    resize: vertical;
 }
 
 /* ==========================================================================
@@ -84,10 +84,10 @@ textarea {
    ========================================================================== */
 
 .chromeframe {
-	margin: 0.2em 0;
-	background: #ccc;
-	color: #000;
-	padding: 0.2em 0;
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
 }
 
 /* ==========================================================================
@@ -95,22 +95,22 @@ textarea {
    ========================================================================== */
 
 html, body {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 *:focus {
-	outline: none;
+    outline: none;
 }
 
 a,
 a:visited {
-	text-decoration: none;
-	color: #333;
+    text-decoration: none;
+    color: #333;
 }
 
 a:hover {
-	color: #555;
+    color: #555;
 }
 
 @font-face {
@@ -142,63 +142,100 @@ a:hover {
 }
 
 body {
-	font-family: 'PT Serif', '微軟正黑體', '儷黑Pro', 'Ubuntu', Arial;
-	background: #222;
+    font-family: 'PT Serif', '微軟正黑體', '儷黑Pro', 'Ubuntu', Arial;
+    background: #222;
 }
 
 header {
-	background: #222;
-	border-top: 5px solid #8cc84b;
-	color: #8cc84b;
-	height: 40px;
-	line-height: 40px;
-	padding: 5px 15px;
+    background: #222;
+    border-top: 5px solid #8cc84b;
+    color: #8cc84b;
+    height: 40px;
+    line-height: 40px;
+    padding: 5px 15px;
 }
 
 header > h1 {
-	margin: 0;
-	font-size: 150%;
+    display: inline-block;
+    margin: 0;
+    font-size: 150%;
+}
+
+header > span {
+    font-size: 70%;
+    padding-left: 10px;
+    color: #ccc;
 }
 
 #main h2 {
     font-size: 120%;
 }
 
-nav,
+div.nav,
 div.item,
 div.content {
     top: 55px;
     bottom: 0;
     position: fixed;
-    width: 240px;
     min-height: 100px;
     overflow-y: scroll;
+    padding-top: 10px;
     padding-left: 10px;
     padding-bottom: 20px;
 }
 
-nav {
-	background: #444;
-    color: #222;
+div.nav {
+    background: #444;
+    color: #111;
+    width: 240px;
 }
 
 div.item {
-	left: 250px;
-	background: #333;
+    left: 250px;
+    background: #333;
+    color: #999;
+    width: 240px;
 }
 
-nav span,
+.active_a,
+div.nav span:hover {
+    background: #333;
+    color: #ddd;
+    border-radius: 5px 0 0 5px;
+    -o-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+}
+
+.active_b,
+div.item span:hover {
+    background: #222;
+    color: #ddd;
+    border-radius: 5px 0 0 5px;
+    -o-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+}
+
+div.nav span,
 div.item span {
+    padding-left: 10px;
     display: block;
     cursor: pointer;
+    height: 35px;
+    line-height: 32px;
+    margin-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.content {
-	left: 500px;
-	right: 0;
-	background: #222;
-	color: #ccc;
+    left: 500px;
+    right: 0;
+    background: #222;
+    color: #ccc;
     width: inherit;
+    padding-left: 25px;
 }
 
 /* ==========================================================================
@@ -210,18 +247,18 @@ div.content {
  */
 
 .ir {
-	background-color: transparent;
-	border: 0;
-	overflow: hidden;
-	/* IE 6/7 fallback */
-	*text-indent: -9999px;
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
 }
 
 .ir:before {
-	content: "";
-	display: block;
-	width: 0;
-	height: 150%;
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
 }
 
 /*
@@ -229,8 +266,8 @@ div.content {
  */
 
 .hidden {
-	display: none !important;
-	visibility: hidden;
+    display: none !important;
+    visibility: hidden;
 }
 
 /*
@@ -238,14 +275,14 @@ div.content {
  */
 
 .visuallyhidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 
 /*
@@ -255,12 +292,12 @@ div.content {
 
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
-	clip: auto;
-	height: auto;
-	margin: 0;
-	overflow: visible;
-	position: static;
-	width: auto;
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
 }
 
 /*
@@ -268,7 +305,7 @@ div.content {
  */
 
 .invisible {
-	visibility: hidden;
+    visibility: hidden;
 }
 
 /*
@@ -276,21 +313,21 @@ div.content {
  *
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the
- *	`contenteditable` attribute is included anywhere else in the document.
- *	Otherwise it causes space to appear at the top and bottom of elements
- *	that receive the `clearfix` class.
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
  * 2. The use of `table` rather than `block` is only necessary if using
- *	`:before` to contain the top-margins of child elements.
+ *    `:before` to contain the top-margins of child elements.
  */
 
 .clearfix:before,
 .clearfix:after {
-	content: " "; /* 1 */
-	display: table; /* 2 */
+    content: " "; /* 1 */
+    display: table; /* 2 */
 }
 
 .clearfix:after {
-	clear: both;
+    clear: both;
 }
 
 /*
@@ -299,7 +336,7 @@ div.content {
  */
 
 .clearfix {
-	*zoom: 1;
+    *zoom: 1;
 }
 
 /* ==========================================================================
@@ -309,14 +346,14 @@ div.content {
    ========================================================================== */
 
 @media only screen and (min-width: 35em) {
-	/* Style adjustments for viewports that meet the condition */
+    /* Style adjustments for viewports that meet the condition */
 }
 
 @media print,
-	   (-o-min-device-pixel-ratio: 5/4),
-	   (-webkit-min-device-pixel-ratio: 1.25),
-	   (min-resolution: 120dpi) {
-	/* Style adjustments for high resolution devices */
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
 }
 
 /* ==========================================================================
@@ -325,68 +362,68 @@ div.content {
    ========================================================================== */
 
 @media print {
-	* {
-		background: transparent !important;
-		color: #000 !important; /* Black prints faster: h5bp.com/s */
-		box-shadow: none !important;
-		text-shadow: none !important;
-	}
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
 
-	a,
-	a:visited {
-		text-decoration: underline;
-	}
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
 
-	a[href]:after {
-		content: " (" attr(href) ")";
-	}
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
 
-	abbr[title]:after {
-		content: " (" attr(title) ")";
-	}
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
 
-	/*
-	 * Don't show links for images, or javascript/internal links
-	 */
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
 
-	.ir a:after,
-	a[href^="javascript:"]:after,
-	a[href^="#"]:after {
-		content: "";
-	}
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
 
-	pre,
-	blockquote {
-		border: 1px solid #999;
-		page-break-inside: avoid;
-	}
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
 
-	thead {
-		display: table-header-group; /* h5bp.com/t */
-	}
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
 
-	tr,
-	img {
-		page-break-inside: avoid;
-	}
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
 
-	img {
-		max-width: 100% !important;
-	}
+    img {
+        max-width: 100% !important;
+    }
 
-	@page {
-		margin: 0.5cm;
-	}
+    @page {
+        margin: 0.5cm;
+    }
 
-	p,
-	h2,
-	h3 {
-		orphans: 3;
-		widows: 3;
-	}
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
 
-	h2,
-	h3 {
-		page-break-after: avoid;
-	}
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
 }
