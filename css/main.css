@@ -167,8 +167,29 @@ header > span {
     color: #ccc;
 }
 
-#main h2 {
-    font-size: 120%;
+code {
+    padding: 0 2px;
+    border: 1px solid #555;
+    background: #333;
+    border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+pre {
+    border: 1px solid #8cc84b;
+    border-left: 6px solid #8cc84b;
+    padding: 10px;
+    padding-left: 20px;
+    background: #eee;
+    color: #222;
+}
+
+pre > code {
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 div.nav,
@@ -178,10 +199,9 @@ div.content {
     bottom: 0;
     position: fixed;
     min-height: 100px;
-    overflow-y: scroll;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-bottom: 20px;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px 0 20px 10px;
 }
 
 div.nav {
@@ -197,10 +217,29 @@ div.item {
     width: 290px;
 }
 
+div.nav::-webkit-scrollbar,
+div.item::-webkit-scrollbar,
+div.content::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+div.nav::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+div.item::-webkit-scrollbar-thumb {
+    background: #222;
+}
+
+div.content::-webkit-scrollbar-thumb {
+    background: #444;
+}
+
 .active_a,
 div.nav span:hover {
     background: #333;
-    color: #ddd;
+    color: #999;
     border-radius: 5px 0 0 5px;
     -o-border-radius: 5px 0 0 5px;
     -moz-border-radius: 5px 0 0 5px;
@@ -227,6 +266,7 @@ div.item span {
     margin-bottom: 2px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 110%;
 }
 
 div.content {
@@ -235,8 +275,22 @@ div.content {
     background: #222;
     color: #ccc;
     width: inherit;
-    padding-left: 25px;
-    padding-top: 0;
+    padding: 0 25px 20px 25px;
+}
+
+div.content h1 {
+    border-bottom: 1px solid #666;
+}
+
+div.content h2 {
+    border-left: 6px solid #666;
+    border-bottom: 1px solid #666;
+    padding-left: 5px;
+}
+
+div.content div {
+    margin-left: 20px;
+    font-size: 110%;
 }
 
 /* ==========================================================================

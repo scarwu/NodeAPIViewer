@@ -23,16 +23,31 @@ function getAPIData (target, cb) {
 	}
 }
 
-function printContent (data) {
+function printContent (data, level, count) {
 	$.each(data, function (index) {
 		if (index in api_type) {
 			for(var order in data[index]) {
-				$('div.content').append('<div><h1>' + data[index][order].textRaw.replace('\\', '') + '</h1>');
-				$('div.content').append(data[index][order].desc);
+				var current = data[index][order];
+				var header = $('<h' + level + '>')
+					.html(current.textRaw.replace('\\', ''))
+					.attr('id', null);
+				
+				$('div.content').append(header);
 
-				$('div.item').append('<span>' + data[index][order].textRaw.replace('\\', '') + '</span>');
+				var desc = $('<div>');
+				
+				if ('stability' in current) {
+					var stability = $('<pre><code>').html('Stability ' + current.stability + ': ' + current.stabilityText);
+					desc.append(stability);
+				}
 
-				printContent(data[index][order]);
+				desc.append(current.desc);
+				$('div.content').append(desc);
+
+				var item = $('<span>').html(current.textRaw.replace('\\', ''));
+				$('div.item').append(item);
+
+				printContent(current, level+1);
 			}
 		}
 	});
@@ -62,7 +77,10 @@ $('body').delegate('div.nav span', 'click', function () {
 
 	getAPIData($(this).attr('class').split(' ')[0], function (data) {
 		console.log(data);
-		printContent (data);
+		printContent (data, 1);
 	});
+
+}).delegate('div.item span', 'click', function () {
+	console.log($(this).eq());
 
 });
