@@ -106,11 +106,11 @@ html, body {
 a,
 a:visited {
     text-decoration: none;
-    color: #333;
+    color: #999;
 }
 
 a:hover {
-    color: #555;
+    color: #ccc;
 }
 
 @font-face {
