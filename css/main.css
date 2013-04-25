@@ -290,6 +290,11 @@ div.content h2 {
     padding-left: 5px;
 }
 
+div.content h3 {
+    border-left: 6px solid #666;
+    padding-left: 5px;
+}
+
 div.content div {
     margin-left: 20px;
     font-size: 110%;
