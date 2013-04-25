@@ -23,8 +23,8 @@ function getAPIData (target, cb) {
 	}
 }
 
-function printContent (data, level, count) {
-	$.each(data, function (index) {
+function printContent (data, level, count, cb) {
+	for (var index in data) {
 		if (index in api_type) {
 			for(var order in data[index]) {
 				var current = data[index][order];
@@ -52,10 +52,12 @@ function printContent (data, level, count) {
 				printContent(current, level + 1, count);
 			}
 		}
-	});
+	}
+
+	cb && cb();
 }
 
-function selectItem() {
+function selectItem () {
 	for (var index = 0;index < $('div.content .block').size();index++) {
 		var current = $('div.content .block').eq(index);
 		if(current.position().top >= 0) {
@@ -84,18 +86,24 @@ $('body').delegate('div.nav span', 'click', function () {
 
 	$('div.item').html('');
 	$('div.content').html('');
+	$('div.content').stop().animate({
+		scrollTop: 0
+	}, 750);
 
 	getAPIData($(this).attr('class').split(' ')[0], function (data) {
 		console.log(data);
-		printContent(data, 1, 0);
-		selectItem();
+		printContent(data, 1, 0, function () {
+			selectItem();
+			var content = $('div.content .block').last().css({
+				height: $('div.content').height()
+			});
+		});
+		
 	});
 
 }).delegate('div.item span', 'click', function () {
 	var index = $(this).attr('data-order');
-	var moveTo = $('div.content .block').eq(index).position().top;
-
-	console.log(moveTo);
+	var moveTo = $('div.content .block').eq(index).position().top - $('div.content .block').eq(0).position().top;
 
 	$('div.content').stop().animate({
 		scrollTop: moveTo
@@ -104,4 +112,7 @@ $('body').delegate('div.nav span', 'click', function () {
 
 $('div.content').on('scroll', function () {
 	selectItem();
+	var content = $('div.content .block').last().css({
+		height: $('div.content').height()
+	});
 });
