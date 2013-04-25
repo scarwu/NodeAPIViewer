@@ -68,9 +68,11 @@ function selectItem () {
 }
 
 function contentResize () {
-	var content = $('div.content .block').last().css({
-		height: $('div.content').height() - 30
-	});
+	if ($('div.content .block').last().height() < $('div.content').height()) {
+		var content = $('div.content .block').last().css({
+			height: $('div.content').height() - 30
+		});
+	}
 }
 
 $(document).ready(function () {
