@@ -7,7 +7,8 @@ var api_type = {
 	methods: true,
 	vars: true,
 	modules: true,
-	classes: true
+	classes: true,
+	events: true
 };
 
 function getAPIData (target, cb) {
