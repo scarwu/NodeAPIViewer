@@ -89,7 +89,12 @@ $(document).ready(function () {
 	});
 });
 
-$('body').delegate('div.nav span', 'click', function () {
+$('body').delegate('#clear', 'click', function () {
+	for (var index in window.localStorage)
+		window.localStorage.removeItem(index);
+	
+	location.reload();
+}).delegate('div.nav span', 'click', function () {
 	$(this).addClass('active_a').siblings().removeClass('active_a');
 
 	$('div.item').html('');

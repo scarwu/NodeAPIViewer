@@ -162,8 +162,19 @@ header > h1 {
 }
 
 header > span {
-    font-size: 70%;
+    font-size: 80%;
     padding-left: 10px;
+    color: #ccc;
+}
+
+#clear {
+    float: right;
+    border-left: 1px solid #666;
+    cursor: pointer;
+    color: #999;
+}
+
+#clear:hover {
     color: #ccc;
 }
 
