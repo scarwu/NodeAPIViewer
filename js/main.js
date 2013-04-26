@@ -8,7 +8,8 @@ var api_type = {
 	vars: true,
 	modules: true,
 	classes: true,
-	events: true
+	events: true,
+	properties: true
 };
 
 function getAPIData (target, cb) {
@@ -59,9 +60,9 @@ function printContent (data, level, cb) {
 }
 
 function selectItem () {
-	for (var index = 0;index < $('div.content .block').size();index++) {
+	for (var index = $('div.content .block').size()-1;index >= 0;index--) {
 		var current = $('div.content .block').eq(index);
-		if(current.position().top >= 0) {
+		if(current.position().top <= 1) {
 			$('div.item span').eq(index).addClass('active_b').siblings().removeClass('active_b');
 			return;
 		}
