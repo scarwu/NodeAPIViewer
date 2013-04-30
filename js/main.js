@@ -26,6 +26,10 @@ function getAPIData (target, cb) {
 }
 
 function printContent (data, level, cb) {
+	String.prototype.repeat = function(times) {
+		return (new Array(times + 1)).join(this);
+	};
+
 	for (var index in data) {
 		if (index in api_type) {
 			for(var order in data[index]) {
@@ -48,7 +52,8 @@ function printContent (data, level, cb) {
 
 				$('div.content').append(div);
 
-				var item = $('<span>').html(current.textRaw.replace('\\', ''));
+
+				var item = $('<span>').html('&nbsp;'.repeat((level - 1) * 8) + current.textRaw.replace('\\', ''));
 				$('div.item').append(item);
 
 				printContent(current, level + 1);
