@@ -9,7 +9,8 @@ var api_type = {
 	modules: true,
 	classes: true,
 	events: true,
-	properties: true
+	properties: true,
+	options: true
 };
 
 function getAPIData (target, cb) {
