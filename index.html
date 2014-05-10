@@ -1,40 +1,67 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="node,nodejs,api,docs,viewer">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta property="og:description" name="description" content="NodeJS API Viewer" />
+    <meta property="og:title" content="NodeJS API Viewer" />
+    <meta property="og:url" content="http://scar.simcz.tw/NodeAPIViwer/" />
+    <meta property="og:image" content="http://scar.simcz.tw/images/icon.jpg" />
 
-	<title>NodeJS API Viewer</title>
-	
-	<script src="js/modernizr-2.6.2.min.js"></script>
+    <title>NodeJS API Viewer</title>
 
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="canonical" href="http://scar.simcz.tw/NodeAPIViwer/" />
+    <link rel="author" href="https://plus.google.com/+ScarWu" />
+    <link rel="image_src" href="http://scar.simcz.tw/images/icon.jpg" />
+    <link rel="shortcut icon" href="http://scar.simcz.tw/favicon.ico" />
 </head>
 <body>
-	<header>
-		<h1>NodeJS API Viewer</h1>
-		<span>by <a href="http://scar.simcz.tw" target="_blank">ScarWu</a>,
-			API Data from <a href="http://nodejs.org/api/" target="_blank">Node.js Manual & Documentation</a>,
-			and Source code on the <a href="https://github.com/scarwu/NodeAPIViewer" target="_blank">GitHub</a>.
-		</span>
-		<span id="clear">Clear Cache</span>
-	</header>
-	<div id="main">
-		<div class="nav"></div>
-		<div class="item"></div>
-		<div class="content"></div>
-	</div>
+    <header>
+        <h1>NodeJS API Viewer</h1>
+        <span>by <a href="http://scar.simcz.tw" target="_blank">ScarWu</a>,
+            API Data from <a href="http://nodejs.org/api/" target="_blank">Node.js Manual & Documentation</a>,
+            and Source code on the <a href="https://github.com/scarwu/NodeAPIViewer" target="_blank">GitHub</a>.
+        </span>
+        <span id="social_tool">
+            <div class="twitter">
+                <a class="twitter-share-button" data-url="http://scar.simcz.tw/NodeAPIViwer/" data-text="NodeJS API Viewer" data-lang="en" data-via="xneriscool"></a>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://scar.simcz.tw/NodeAPIViwer/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+            </div>
+            <div class="google">
+                <div class="g-plusone" data-href="http://scar.simcz.tw/NodeAPIViwer/" data-size="medium"></div>
+            </div>
+        </span>
+        <span id="clear">Clear Cache</span>
+    </header>
 
-	<script src="js/jquery-1.9.1.min.js"></script>
-	<script src="js/main.js"></script>
-	<script>
-		var _gaq = [['_setAccount', 'UA-30675094-1'], ['_trackPageview']]; (function(d, t) {
-			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-			g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-			s.parentNode.insertBefore(g, s)
-		} (document, 'script'));
-	</script>
+    <div id="main">
+        <div id="nav"></div>
+        <div id="item"></div>
+        <div id="content"></div>
+    </div>
+
+    <div id="fb-root"></div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function asyncLoad(src) {
+            var s = document.createElement('script');
+            s.src = src; s.async = true;
+            var e = document.getElementsByTagName('script')[0];
+            e.parentNode.insertBefore(s, e);
+        }
+        var _gaq = [['_setAccount', 'UA-30675094-1'], ['_trackPageview']];
+        asyncLoad(('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js');
+        asyncLoad('https://apis.google.com/js/plusone.js');
+        asyncLoad('//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1403512429930397&version=v2.0');
+        asyncLoad(('https:' == location.protocol ? 'https' : 'http') + '://platform.twitter.com/widgets.js');
+    </script>
 </body>
 </html>
