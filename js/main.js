@@ -1,6 +1,6 @@
 'use strict';
 
-var api_url = 'http://nodejs.org/api/';
+var api_url = 'https://nodejs.org/api/';
 var api_type = {
     miscs: true,
     globals: true,
