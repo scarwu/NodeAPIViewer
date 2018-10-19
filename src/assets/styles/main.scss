@@ -1,0 +1,300 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+@charset 'utf-8';
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+body {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+*:focus {
+    outline: none;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #999;
+}
+
+a:hover {
+    color: #ccc;
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Serif'), local('PTSerif-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptserif/v4/sDRi4fY9bOiJUbgq53yZCfesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 700;
+  src: local('PT Serif Bold'), local('PTSerif-Bold'), url(http://themes.googleusercontent.com/static/fonts/ptserif/v4/QABk9IxT-LFTJ_dQzv7xpIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: italic;
+  font-weight: 400;
+  src: local('PT Serif Italic'), local('PTSerif-Italic'), url(http://themes.googleusercontent.com/static/fonts/ptserif/v4/03aPdn7fFF3H6ngCgAlQzBsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: italic;
+  font-weight: 700;
+  src: local('PT Serif Bold Italic'), local('PTSerif-BoldItalic'), url(http://themes.googleusercontent.com/static/fonts/ptserif/v4/Foydq9xJp--nfYIx2TBz9QFhaRv2pGgT5Kf0An0s4MM.woff) format('woff');
+}
+
+body {
+    font-family: 'PT Serif', Arial;
+    background: #222;
+}
+
+header {
+    overflow: hidden;
+    position: relative;
+    padding: 5px 15px;
+    height: 40px;
+    background: #222;
+    border-top: 5px solid #8cc84b;
+    line-height: 40px;
+    color: #8cc84b;
+}
+
+header > h1 {
+    display: inline-block;
+    margin: 0;
+    font-size: 150%;
+}
+
+header > span {
+    font-size: 80%;
+    padding-left: 10px;
+    color: #ccc;
+}
+
+#social_tool {
+    margin: 0 100px 0 100px;
+}
+
+#social_tool > div {
+    display: inline-block;
+    min-width: 107px;
+    height: 20px;
+}
+
+#social_tool .facebook {
+    position: relative;
+}
+
+#social_tool .facebook .fb-like {
+    top: -16px;
+}
+
+#clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #222;
+    border-left: 1px solid #666;
+    cursor: pointer;
+    color: #999;
+}
+
+#clear:hover {
+    color: #ccc;
+}
+
+code {
+    padding: 0 2px;
+    border: 1px solid #555;
+    background: #333;
+    border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-family: 'monospace', 'Courier';
+}
+
+pre {
+    border: 1px solid #8cc84b;
+    border-left: 6px solid #8cc84b;
+    padding: 10px;
+    padding-left: 20px;
+    background: #eee;
+    color: #222;
+}
+
+pre > code {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+#nav,
+#item,
+#content {
+    top: 55px;
+    bottom: 0;
+    position: fixed;
+    min-height: 100px;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px 0 20px 10px;
+}
+
+#nav {
+    background: #444;
+    color: #111;
+    width: 190px;
+}
+
+#item {
+    left: 200px;
+    background: #333;
+    color: #999;
+    width: 240px;
+}
+
+#nav::-webkit-scrollbar,
+#item::-webkit-scrollbar,
+#content::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+#nav::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+#item::-webkit-scrollbar-corner,
+#item::-webkit-scrollbar-thumb {
+    background: #222;
+}
+
+#content::-webkit-scrollbar-thumb {
+    background: #444;
+}
+
+.active_a,
+#nav span:hover {
+    background: #333;
+    color: #999;
+    border-radius: 5px 0 0 5px;
+    -o-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+}
+
+.active_b,
+#item span:hover {
+    background: #222;
+    color: #ddd;
+    border-radius: 5px 0 0 5px;
+    -o-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+}
+
+#nav span,
+#item span {
+    padding-left: 10px;
+    display: block;
+    cursor: pointer;
+    height: 35px;
+    line-height: 32px;
+    margin-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 110%;
+}
+
+#content {
+    left: 450px;
+    right: 0;
+    background: #222;
+    color: #ddd;
+    width: inherit;
+    padding: 0 25px 20px 25px;
+}
+
+#content .block {
+    padding-bottom: 30px;
+}
+
+#content h1 {
+    border-bottom: 1px solid #666;
+    margin-top: 0;
+}
+
+#content h2 {
+    border-left: 6px solid #666;
+    border-bottom: 1px solid #666;
+    padding-left: 5px;
+    margin-top: 0;
+}
+
+#content h3 {
+    border-left: 6px solid #666;
+    padding-left: 5px;
+    margin-top: 0;
+}
+
+#content div {
+    margin-left: 20px;
+    font-size: 110%;
+}
