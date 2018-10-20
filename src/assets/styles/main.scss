@@ -1,55 +1,24 @@
-/*
- * HTML5 Boilerplate
+/**
+ * Website Style
  *
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
+ * @package     MHW Calculator
+ * @author      Scar Wu
+ * @copyright   Copyright (c) Scar Wu (http://scar.tw)
+ * @link        https://github.com/scarwu/NodeAPIViewer
  */
-@charset 'utf-8';
 
-html,
-button,
-input,
-select,
-textarea {
-    color: #222;
-}
+/**
+ * Reset Bootstrap
+ */
+$grid-gutter-width: 0;
 
-body {
-    font-size: 1em;
-    line-height: 1.4;
-}
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/font-awesome/scss/font-awesome";
 
-::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-::selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
-
-img {
-    vertical-align: middle;
-}
-
-textarea {
-    resize: vertical;
-}
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+/**
+ * Load Specify Styles
+ */
+@import "hljs";
 
 html,
 body {
