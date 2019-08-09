@@ -40,9 +40,9 @@ let fetchData = (target, callback) => {
         callback && callback(window.localStorage[target]);
     } else {
         axios.get(`${apiUrl}/${target}.md`).then((res) => {
-            window.localStorage[target] = res.data;
+            window.localStorage[target] = marked(res.data);
 
-            callback && callback(res.data);
+            callback && callback(window.localStorage[target]);
         }).catch((err) => {
             callback && callback(null);
         });
@@ -78,7 +78,7 @@ let fetchData = (target, callback) => {
 //             $('#content').append(div);
 
 //             let item = $('<span>').html('&nbsp;'.repeat((level - 1) * 8) + current.textRaw.replace('\\', ''));
-//             $('#item').append(item);
+//             $('#option').append(item);
 
 //             printContent(current, level + 1);
 //         }
@@ -87,27 +87,27 @@ let fetchData = (target, callback) => {
 //     callback && callback();
 // }
 
-let selectItem = () => {
-    for (let index = $('#content .block').size()-1; index >= 0; index--) {
-        if ($('#content .block').eq(index).position().top > 1) {
-            continue;
-        }
+// let selectOption = () => {
+//     for (let index = $('#content .block').size()-1; index >= 0; index--) {
+//         if ($('#content .block').eq(index).position().top > 1) {
+//             continue;
+//         }
 
-        $('#item span').eq(index).addClass('active_b').siblings().removeClass('active_b');
+//         $('#option span').eq(index).addClass('active_b').siblings().removeClass('active_b');
 
-        break;
-    }
-}
+//         break;
+//     }
+// }
 
-let contentResize = () => {
-    if ($('#content .block').last().height() >= $('#content').height()) {
-        return;
-    }
+// let contentResize = () => {
+//     if ($('#content .block').last().height() >= $('#content').height()) {
+//         return;
+//     }
 
-    $('#content .block').last().css({
-        height: $('#content').height() - 30
-    });
-}
+//     $('#content .block').last().css({
+//         height: $('#content').height() - 30
+//     });
+// }
 
 /**
  * Event Listeners
@@ -120,37 +120,50 @@ document.querySelector('#clear').addEventListener('click', () => {
     location.reload();
 });
 
-document.querySelector('#content').addEventListener('scroll', () => {
-    selectItem();
-    contentResize();
-});
-
-// document.querySelector('#nav').addEventListener('click', () => {
-//     if (e.target.tagName.toLowerCase() !== 'span') {
-//         return;
-//     }
-
-//     $(this).addClass('active_a').siblings().removeClass('active_a');
-
-//     $('#item').html('');
-//     $('#content').html('');
-//     $('#content').stop().animate({
-//         scrollTop: 0
-//     }, 750);
-
-//     fetchData($(this).attr('class').split(' ')[0], function (data) {
-//         printContent(data, 1, () => {
-//             selectItem();
-//             contentResize();
-
-//             for (let index = 0; index < $('#item span').size(); index++) {
-//                 $('#item span').eq(index).attr('data-order', index);
-//             }
-//         });
-//     });
+// document.querySelector('#content').addEventListener('scroll', () => {
+//     selectOption();
+//     contentResize();
 // });
 
-// document.querySelector('#item').addEventListener('click', (e) => {
+document.querySelector('#menu').addEventListener('click', (e) => {
+    if (e.target.tagName.toLowerCase() !== 'span') {
+        return;
+    }
+
+    $(e.target).addClass('active_a').siblings().removeClass('active_a');
+
+    $('#option').html('');
+    $('#content').html('');
+    $('#content').stop().animate({
+        scrollTop: 0
+    }, 750);
+
+    fetchData($(e.target).attr('class').split(' ')[0], function (html) {
+        let elem = document.createElement('div');
+
+        elem.innerHTML = html;
+        elem.querySelectorAll('h2').forEach((node) => {
+            let elem = document.createElement('span');
+
+            elem.innerHTML = node.innerHTML;
+
+            document.querySelector('#option').appendChild(elem);
+        });
+
+        document.querySelector('#content').innerHTML = html;
+
+        // printContent(data, 1, () => {
+        //     selectOption();
+        //     contentResize();
+
+        //     for (let index = 0; index < $('#option span').size(); index++) {
+        //         $('#option span').eq(index).attr('data-order', index);
+        //     }
+        // });
+    });
+});
+
+// document.querySelector('#option').addEventListener('click', (e) => {
 //     if (e.target.tagName.toLowerCase() !== 'span') {
 //         return;
 //     }
@@ -163,12 +176,27 @@ document.querySelector('#content').addEventListener('scroll', () => {
 //     }, 750);
 // });
 
-fetchData('index', (data) => {
-    if (null === data) {
+fetchData('index', (html) => {
+    if (null === html) {
         return;
     }
 
-    document.querySelector('#nav').innerHTML = marked(data);
+    let createMenuChild = (node) => {
+        let elem = document.createElement('span');
+
+        elem.classList.add(node.getAttribute('href').match(/(.+)\.html/)[1]);
+        elem.innerHTML = node.innerHTML;
+
+        document.querySelector('#menu').appendChild(elem);
+    };
+
+    let elem = document.createElement('div');
+
+    elem.innerHTML = html;
+    elem.querySelectorAll('ul')[0].querySelectorAll('a').forEach(createMenuChild);
+    elem.querySelectorAll('ul')[1].querySelectorAll('a').forEach(createMenuChild);
+
+    document.querySelectorAll('#menu span')[0].click();
 
     // data.desc.forEach((index) => {
     //     let item = data.desc[index];
@@ -179,8 +207,8 @@ fetchData('index', (data) => {
 
     //     let text = item.text.match(/\[(.+)\]\((.+)\.html\)/);
 
-    //     $('#nav').append('<span class="' + text[2] + '">' + text[1] + '</span>');
+    //     $('#menu').append('<span class="' + text[2] + '">' + text[1] + '</span>');
     // });
 
-    // $('#nav span').eq(0).click();
+    // $('#menu span').eq(0).click();
 });
