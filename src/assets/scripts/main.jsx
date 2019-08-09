@@ -8,14 +8,11 @@
  * @link        https://github.com/scarwu/NodeAPIViewer
  */
 
-// Load Libraries
+import axios from 'axios';
+import marked from 'marked';
 import $ from 'jquery';
 
-String.prototype.repeat = (times) => {
-    return (new Array(times + 1)).join(this);
-};
-
-let apiHost = 'https://nodejs.org/api/';
+let apiUrl = 'https://raw.githubusercontent.com/nodejs/node/master/doc/api';
 let contentType = {
     miscs: true,
     globals: true,
@@ -28,123 +25,162 @@ let contentType = {
     options: true
 };
 
-function fetchData (contentName, callback) {
-    if (contentName in window.localStorage) {
-        callback && callback(JSON.parse(window.localStorage[contentName]));
+/**
+ * Prototype Extends
+ */
+String.prototype.repeat = (times) => {
+    return (new Array(times + 1)).join(this);
+};
+
+/**
+ * Default Functions
+ */
+let fetchData = (target, callback) => {
+    if (target in window.localStorage) {
+        callback && callback(window.localStorage[target]);
     } else {
-        $.getJSON(apiHost + contentName + '.json', (data) => {
-            window.localStorage[contentName] = JSON.stringify(data);
+        axios.get(`${apiUrl}/${target}.md`).then((res) => {
+            window.localStorage[target] = res.data;
 
-            callback && callback(data);
+            callback && callback(res.data);
+        }).catch((err) => {
+            callback && callback(null);
         });
     }
 }
 
-function printContent (data, level, callback) {
-    for (var index in data) {
-        if (index in contentType) {
-            for (var order in data[index]) {
-                var current = data[index][order];
+// let printContent = (data, level, callback) => {
+//     for (let key in data) {
+//         if (false === (key in contentType)) {
+//             continue;
+//         }
 
-                var div = $('<div>').attr('class', 'block');
-                var header = $('<h' + level + '>')
-                    .html(current.textRaw.replace('\\', ''))
-                    .attr('id', null);
-                div.append(header);
+//         for (let order in data[key]) {
+//             let current = data[key][order];
 
-                var desc = $('<div>');
+//             let div = $('<div>').attr('class', 'block');
+//             let header = $('<h' + level + '>')
+//                 .html(current.textRaw.replace('\\', ''))
+//                 .attr('id', null);
+//             div.append(header);
 
-                if ('stability' in current) {
-                    var stability = $('<pre>').html('<code>Stability ' + current.stability +
-                        ': ' + current.stabilityText + '</code>');
-                    desc.append(stability);
-                }
+//             let desc = $('<div>');
 
-                desc.append(current.desc);
-                div.append(desc);
+//             if ('stability' in current) {
+//                 let stability = $('<pre>').html('<code>Stability ' + current.stability +
+//                     ': ' + current.stabilityText + '</code>');
+//                 desc.append(stability);
+//             }
 
-                $('#content').append(div);
+//             desc.append(current.desc);
+//             div.append(desc);
 
-                var item = $('<span>').html('&nbsp;'.repeat((level - 1) * 8) + current.textRaw.replace('\\', ''));
-                $('#item').append(item);
+//             $('#content').append(div);
 
-                printContent(current, level + 1);
-            }
+//             let item = $('<span>').html('&nbsp;'.repeat((level - 1) * 8) + current.textRaw.replace('\\', ''));
+//             $('#item').append(item);
+
+//             printContent(current, level + 1);
+//         }
+//     }
+
+//     callback && callback();
+// }
+
+let selectItem = () => {
+    for (let index = $('#content .block').size()-1; index >= 0; index--) {
+        if ($('#content .block').eq(index).position().top > 1) {
+            continue;
         }
-    }
 
-    callback && callback();
-}
+        $('#item span').eq(index).addClass('active_b').siblings().removeClass('active_b');
 
-function selectItem () {
-    for (var index = $('#content .block').size()-1; index >= 0; index--) {
-        if ($('#content .block').eq(index).position().top <= 1) {
-            $('#item span').eq(index).addClass('active_b').siblings().removeClass('active_b');
-
-            break;
-        }
+        break;
     }
 }
 
-function contentResize () {
-    if ($('#content .block').last().height() < $('#content').height()) {
-        $('#content .block').last().css({
-            height: $('#content').height() - 30
-        });
+let contentResize = () => {
+    if ($('#content .block').last().height() >= $('#content').height()) {
+        return;
     }
-}
 
-$(document).ready(() => {
-    fetchData('index', (data) => {
-        $.each(data.desc, (index) => {
-            var item = data.desc[index];
-
-            if ('text' == item.type) {
-                var text = item.text.match(/\[(.+)\]\((.+)\.html\)/);
-
-                $('#nav').append('<span class="' + text[2] + '">' + text[1] + '</span>');
-            }
-        });
-
-        $('#nav span').eq(0).click();
+    $('#content .block').last().css({
+        height: $('#content').height() - 30
     });
-});
+}
 
-$('body').delegate('#clear', 'click', () => {
-    for (var index in window.localStorage) {
-        window.localStorage.removeItem(index);
+/**
+ * Event Listeners
+ */
+document.querySelector('#clear').addEventListener('click', () => {
+    for (let key in window.localStorage) {
+        window.localStorage.removeItem(key);
     }
 
     location.reload();
-}).delegate('#nav span', 'click', () => {
-    $(this).addClass('active_a').siblings().removeClass('active_a');
-
-    $('#item').html('');
-    $('#content').html('');
-    $('#content').stop().animate({
-        scrollTop: 0
-    }, 750);
-
-    fetchData($(this).attr('class').split(' ')[0], function (data) {
-        printContent(data, 1, () => {
-            selectItem();
-            contentResize();
-
-            for (var index = 0; index < $('#item span').size(); index++) {
-                $('#item span').eq(index).attr('data-order', index);
-            }
-        });
-    });
-}).delegate('#item span', 'click', () => {
-    var index = $(this).attr('data-order');
-    var moveTo = $('#content .block').eq(index).position().top - $('#content .block').eq(0).position().top;
-
-    $('#content').stop().animate({
-        scrollTop: moveTo
-    }, 750);
 });
 
-$('#content').on('scroll', () => {
+document.querySelector('#content').addEventListener('scroll', () => {
     selectItem();
     contentResize();
+});
+
+// document.querySelector('#nav').addEventListener('click', () => {
+//     if (e.target.tagName.toLowerCase() !== 'span') {
+//         return;
+//     }
+
+//     $(this).addClass('active_a').siblings().removeClass('active_a');
+
+//     $('#item').html('');
+//     $('#content').html('');
+//     $('#content').stop().animate({
+//         scrollTop: 0
+//     }, 750);
+
+//     fetchData($(this).attr('class').split(' ')[0], function (data) {
+//         printContent(data, 1, () => {
+//             selectItem();
+//             contentResize();
+
+//             for (let index = 0; index < $('#item span').size(); index++) {
+//                 $('#item span').eq(index).attr('data-order', index);
+//             }
+//         });
+//     });
+// });
+
+// document.querySelector('#item').addEventListener('click', (e) => {
+//     if (e.target.tagName.toLowerCase() !== 'span') {
+//         return;
+//     }
+
+//     let index = $(this).attr('data-order');
+//     let moveTo = $('#content .block').eq(index).position().top - $('#content .block').eq(0).position().top;
+
+//     $('#content').stop().animate({
+//         scrollTop: moveTo
+//     }, 750);
+// });
+
+fetchData('index', (data) => {
+    if (null === data) {
+        return;
+    }
+
+    document.querySelector('#nav').innerHTML = marked(data);
+
+    // data.desc.forEach((index) => {
+    //     let item = data.desc[index];
+
+    //     if ('text' !== item.type) {
+    //         return;
+    //     }
+
+    //     let text = item.text.match(/\[(.+)\]\((.+)\.html\)/);
+
+    //     $('#nav').append('<span class="' + text[2] + '">' + text[1] + '</span>');
+    // });
+
+    // $('#nav span').eq(0).click();
 });
