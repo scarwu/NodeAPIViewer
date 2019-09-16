@@ -77,173 +77,199 @@ a:hover {
     overflow: hidden;
     position: relative;
     padding: 5px 15px;
-    height: 40px;
+    height: 55px;
     background: #222;
     border-top: 5px solid #8cc84b;
-    line-height: 40px;
+    line-height: 45px;
     color: #8cc84b;
 
-    h1 {
+    .title {
         display: inline-block;
         margin: 0;
         font-size: 150%;
     }
 
-    span {
+    .description {
         font-size: 80%;
         padding-left: 10px;
         color: #ccc;
     }
-}
 
-#clear {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #222;
-    border-left: 1px solid #666;
-    cursor: pointer;
-    color: #999;
-
-    &:hover {
-        color: #ccc;
-    }
-}
-
-#menu,
-#option,
-#content {
-    top: 55px;
-    bottom: 0;
-    position: fixed;
-    min-height: 100px;
-    overflow-y: auto;
-    overflow-x: auto;
-    padding: 10px 0 20px 10px;
-
-    &::-webkit-scrollbar {
-        height: 10px;
-        width: 10px;
-    }
-}
-
-#menu {
-    background: #444;
-    color: #111;
-    width: 250px;
-
-    &::-webkit-scrollbar-thumb {
-        background: #333;
-    }
-}
-
-#option {
-    left: 250px;
-    background: #333;
-    color: #999;
-    width: 250px;
-
-    &::-webkit-scrollbar-corner,
-    &::-webkit-scrollbar-thumb {
+    .clear {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 50px;
         background: #222;
+        border-left: 1px solid #666;
+        font-size: 80%;
+        line-height: 55px;
+        cursor: pointer;
+        color: #999;
+
+        &:hover {
+            color: #ccc;
+        }
     }
 }
 
-#menu span,
-#option span {
-    padding-left: 10px;
-    display: block;
-    cursor: pointer;
-    height: 35px;
-    line-height: 32px;
-    margin-bottom: 2px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 110%;
-}
+#main {
+    overflow: hidden;
 
-.active_a,
-#menu span:hover {
-    background: #333;
-    color: #999;
-    border-radius: 5px 0 0 5px;
-    -o-border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-}
+    #menu,
+    #option,
+    #content {
+        top: 55px;
+        bottom: 0;
+        position: fixed;
+        min-height: 100px;
+        overflow-y: auto;
+        overflow-x: auto;
+        padding: 10px 0 20px 10px;
 
-.active_b,
-#option span:hover {
-    background: #222;
-    color: #ddd;
-    border-radius: 5px 0 0 5px;
-    -o-border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-}
+        &::-webkit-scrollbar {
+            height: 10px;
+            width: 10px;
+        }
+    }
 
-#content {
-    left: 500px;
-    right: 0;
-    background: #222;
-    color: #ddd;
-    width: inherit;
-    padding: 0 25px 20px 25px;
-
-    &::-webkit-scrollbar-thumb {
+    #menu {
         background: #444;
+        color: #111;
+        width: 250px;
+
+        &::-webkit-scrollbar-thumb {
+            background: #333;
+        }
     }
 
-    .block {
-        padding-bottom: 30px;
+    #option {
+        left: 250px;
+        background: #333;
+        color: #999;
+        width: 250px;
+
+        &::-webkit-scrollbar-corner,
+        &::-webkit-scrollbar-thumb {
+            background: #222;
+        }
     }
 
-    h1 {
-        border-bottom: 1px solid #666;
-        margin-top: 0;
-    }
-
-    h2 {
-        border-left: 6px solid #666;
-        border-bottom: 1px solid #666;
-        padding-left: 5px;
-        margin-top: 0;
-    }
-
-    h3 {
-        border-left: 6px solid #666;
-        padding-left: 5px;
-        margin-top: 0;
-    }
-
-    div {
-        margin-left: 20px;
+    #menu span,
+    #option span {
+        padding-left: 10px;
+        display: block;
+        cursor: pointer;
+        height: 35px;
+        line-height: 32px;
+        margin-bottom: 2px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 110%;
     }
 
-    code {
-        padding: 0 2px;
-        border: 1px solid #555;
+    #option span.is-h2 {
+        padding-left: 30px;
+    }
+
+    #option span.is-h3 {
+        padding-left: 50px;
+    }
+
+    #menu span.is-active,
+    #menu span:hover {
         background: #333;
-        border-radius: 3px;
-        -o-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        font-family: 'monospace', 'Courier';
+        color: #999;
+        border-radius: 5px 0 0 5px;
+        -o-border-radius: 5px 0 0 5px;
+        -moz-border-radius: 5px 0 0 5px;
+        -webkit-border-radius: 5px 0 0 5px;
     }
 
-    pre {
-        border: 1px solid #8cc84b;
-        border-left: 6px solid #8cc84b;
-        padding: 10px;
-        padding-left: 20px;
-        background: #eee;
-        color: #222;
+    #option span.is-active,
+    #option span:hover {
+        background: #222;
+        color: #ddd;
+        border-radius: 5px 0 0 5px;
+        -o-border-radius: 5px 0 0 5px;
+        -moz-border-radius: 5px 0 0 5px;
+        -webkit-border-radius: 5px 0 0 5px;
     }
 
-    pre > code {
-        border: none;
-        background: none;
-        padding: 0;
+    #content {
+        left: 500px;
+        right: 0;
+        background: #222;
+        color: #ddd;
+        width: inherit;
+        padding: 0 25px 20px 25px;
+
+        &::-webkit-scrollbar-thumb {
+            background: #444;
+        }
+
+        .block {
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            border-bottom: 1px solid #666;
+            margin-top: 0;
+        }
+
+        h2 {
+            border-left: 6px solid #666;
+            border-bottom: 1px solid #666;
+            padding-left: 5px;
+            margin-top: 0;
+        }
+
+        h3 {
+            border-left: 6px solid #666;
+            padding-left: 5px;
+            margin-top: 0;
+        }
+
+        div {
+            margin-left: 20px;
+            font-size: 110%;
+        }
+
+        code {
+            padding: 0 2px;
+            border: 1px solid #555;
+            background: #333;
+            border-radius: 3px;
+            -o-border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            font-family: 'monospace', 'Courier';
+        }
+
+        pre {
+            border: 1px solid #8cc84b;
+            border-left: 6px solid #8cc84b;
+            padding: 10px;
+            padding-left: 20px;
+            background: #eee;
+            color: #222;
+        }
+
+        pre > code {
+            border: none;
+            background: none;
+            padding: 0;
+        }
     }
+}
+
+#mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }

@@ -10,7 +10,6 @@
 
 // Load Libraries
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 
 // Load App
 import App from 'app'
@@ -32,43 +31,9 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const router = new VueRouter({
-  mode: 'history',
-  linkActiveClass: 'is-active',
-  routes: [
-    // {
-    //   path: '/:locale?',
-    //   name: 'homepage',
-    //   component: homepage,
-    //   meta: {
-    //     noContainer: true,
-    //     displayNewTheme: true,
-    //     displayOldTheme: false
-    //   }
-    // },
-    // {
-    //   path: '/:locale?/404',
-    //   name: 'notFound',
-    //   component: notFound,
-    //   noContainer: true
-    // },
-    // {
-    //   path: '*',
-    //   name: 'notFoundAll',
-    //   component: notFound,
-    //   meta: {
-    //     noContainer: false
-    //   }
-    // }
-  ]
-})
-
-Vue.use(VueRouter)
 Vue.config.devtools = (process.env.NODE_ENV === 'development')
 Vue.config.silent = (process.env.NODE_ENV === 'production')
 
 new Vue({
-    // store: store,
-    router: router,
     render: h => h(App)
 }).$mount('#app')

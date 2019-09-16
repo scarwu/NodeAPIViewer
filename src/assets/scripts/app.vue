@@ -1,21 +1,32 @@
 <template lang="pug">
 div#app
     header#header
-        h1 NodeJS API Viewer
-        span by <a href="https://scar.tw" target="_blank">ScarWu</a>,
+        h1.title NodeJS API Viewer
+        span.description
+            | by <a href="https://scar.tw" target="_blank">ScarWu</a>,
             | API Data from <a href="http://nodejs.org/api/" target="_blank">Node.js Manual & Documentation</a>,
             | and Source code on the <a href="https://github.com/scarwu/NodeAPIViewer" target="_blank">GitHub</a>.
-        span#clear(@click="clearStorage")
+        span.clear(@click="clearStorage")
             | Clear Cache
-
     div#main
         div#menu
-            span(v-for="(data, index) in menuList", @click="getOptionListAndContent(data.value)")
-                | {{ data.text }}
+            span(
+                v-for="(data, index) in menu.list",
+                :key="data.value",
+                :class="{ 'is-active': menu.id === data.value }",
+                @click="getOptionListAndContent(data.value)"
+            ) {{ data.text }}
         div#option
-            span(v-for="(data, index) in optionList", @click="selectOption(data.value)")
-                | {{ data.text }}
-        div#content(v-html="content")
+            span(
+                v-for="(data, index) in option.list",
+                :key="data.value",
+                :class="{  'is-active': option.id === data.value, 'is-h1': data.isH1, 'is-h2': data.isH2, 'is-h3': data.isH3 }",
+                @click="clickOption(data.value)"
+            ) {{ data.text }}
+        div#content
+            div.article(v-html="content")
+            div.buffer
+    div#mask
 </template>
 
 <script>
@@ -38,20 +49,44 @@ const contentType = {
 }
 
 export default {
-    components: {
-
-    },
     data () {
         return {
-            menuList: [],
-            optionList: [],
+            menu: { list: [], id: null },
+            option: { list: [], id: null },
             content: null
         }
     },
-    computed: {
-
-    },
     methods: {
+        scrollTo (element, to, duration) {
+            let from = element.scrollTop
+            let currentTime = 0
+            let increment = 20
+
+            let animateScroll = () => {
+                currentTime += increment;
+
+                element.scrollTop = this.easeInOutQuad(currentTime, from, to, duration)
+
+                if (currentTime <= duration) {
+                    setTimeout(animateScroll, increment)
+                } else {
+                    element.scrollTop = to
+                }
+            }
+
+            animateScroll()
+        },
+        easeInOutQuad (currentTime, from, to, duration) {
+            currentTime /= duration / 2;
+
+            if (currentTime < 1) {
+                return (to - from) / 2 * currentTime * currentTime + from;
+            }
+
+            currentTime--;
+
+            return -(to - from) / 2 * (currentTime * (currentTime - 2) - 1) + from;
+        },
         fetchData (target, callback) {
             if (target in window.localStorage) {
                 callback && callback(window.localStorage[target])
@@ -66,125 +101,100 @@ export default {
             }
         },
         getMenuList () {
-            this.menuList = []
+            this.menu = { list: [], id: null }
+            this.option = { list: [], id: null }
+            this.content = null
 
             this.fetchData('index', (html) => {
                 if (null === html) {
                     return
                 }
 
-                let menuList = []
-                let elem = document.createElement('div')
-                let appendMenu = (node) => {
-                    let elem = document.createElement('span')
-
-                    menuList.push({
-                        text: node.innerHTML,
+                let menu = { list: [], id: null }
+                let element = document.createElement('div')
+                let appendMenuItem = (node) => {
+                    menu.list.push({
+                        text: node.textContent,
                         value: node.getAttribute('href').match(/(.+)\.html/)[1]
                     })
                 }
 
-                elem.innerHTML = html
-                elem.querySelectorAll('ul')[0].querySelectorAll('a').forEach(appendMenu)
-                elem.querySelectorAll('ul')[1].querySelectorAll('a').forEach(appendMenu)
+                element.innerHTML = html
+                element.querySelectorAll('ul')[0].querySelectorAll('a').forEach(appendMenuItem)
+                element.querySelectorAll('ul')[1].querySelectorAll('a').forEach(appendMenuItem)
 
-                this.menuList = menuList
+                menu.id = menu.list[0].value
 
-                // document.querySelectorAll('#menu span')[0].click()
+                this.menu = menu
             })
         },
         getOptionListAndContent (target) {
-            this.optionList = []
+            let content = document.querySelector('#content')
+
+            if (undefined !== content && null !== content) {
+                this.scrollTo(content, 0, 750)
+            }
+
+            this.menu.id = target
+            this.option = { list: [], id: null }
             this.content = null
-            // $('#content').stop().animate({
-            //     scrollTop: 0
-            // }, 750)
 
             this.fetchData(target, (html) => {
                 if (null === html) {
                     return
                 }
 
-                let optionList = []
-                let elem = document.createElement('div')
+                let option = { list: [], id: null }
+                let elememt = document.createElement('div')
 
-                elem.innerHTML = html
-                elem.querySelectorAll('h2').forEach((node) => {
-                    optionList.push({
-                        text: node.innerHTML,
-                        value: node.getAttribute('id')
+                elememt.innerHTML = html
+                elememt.querySelectorAll('h1, h2, h3').forEach((node) => {
+                    option.list.push({
+                        text: node.textContent,
+                        value: node.getAttribute('id'),
+                        isH1: node.tagName.toLowerCase() === 'h1',
+                        isH2: node.tagName.toLowerCase() === 'h2',
+                        isH3: node.tagName.toLowerCase() === 'h3'
                     })
                 })
 
-                this.optionList = optionList
+                option.id = option.list[0].value
+
+                this.option = option
                 this.content = html
-
-                // printContent(data, 1, () => {
-                //     selectOption()
-                //     contentResize()
-
-                //     for (let index = 0 index < $('#option span').size() index++) {
-                //         $('#option span').eq(index).attr('data-order', index)
-                //     }
-                // })
             })
         },
-        printContent (data, level, callback) {
-            // for (let key in data) {
-            //     if (false === (key in contentType)) {
-            //         continue
-            //     }
+        clickOption (target) {
+            let content = document.querySelector('#content')
 
-            //     for (let order in data[key]) {
-            //         let current = data[key][order]
-
-            //         let div = $('<div>').attr('class', 'block')
-            //         let header = $('<h' + level + '>')
-            //             .html(current.textRaw.replace('\\', ''))
-            //             .attr('id', null)
-            //         div.append(header)
-
-            //         let desc = $('<div>')
-
-            //         if ('stability' in current) {
-            //             let stability = $('<pre>').html('<code>Stability ' + current.stability +
-            //                 ': ' + current.stabilityText + '</code>')
-            //             desc.append(stability)
-            //         }
-
-            //         desc.append(current.desc)
-            //         div.append(desc)
-
-            //         $('#content').append(div)
-
-            //         let item = $('<span>').html('&nbsp'.repeat((level - 1) * 8) + current.textRaw.replace('\\', ''))
-            //         $('#option').append(item)
-
-            //         printContent(current, level + 1)
-            //     }
-            // }
-
-            // callback && callback()
+            this.scrollTo(
+                content,
+                content.querySelector('#' + target).offsetTop,
+                750
+            )
         },
-        selectOption (target) {
-            // for (let index = $('#content .block').size()-1 index >= 0 index--) {
-            //     if ($('#content .block').eq(index).position().top > 1) {
-            //         continue
-            //     }
+        refreshOptionSelected () {
+            let content = document.querySelector('#content')
+            let blocks = content.querySelectorAll('h1, h2, h3')
+            let lastId = false
 
-            //     $('#option span').eq(index).addClass('active_b').siblings().removeClass('active_b')
+            for (let index = 0; index < blocks.length; index++) {
+                if (content.scrollTop < blocks[index].offsetTop) {
+                    continue
+                }
 
-            //     break
-            // }
+                lastId = blocks[index].getAttribute('id')
+            }
+
+            this.option.id = lastId
         },
-        contentResize () {
-            // if ($('#content .block').last().height() >= $('#content').height()) {
-            //     return
-            // }
+        resizeBuffer () {
+            let content = document.querySelector('#content')
+            let article = content.querySelector('.article')
+            let blocks = article.querySelectorAll('h1, h2, h3')
+            let lastBlock = blocks[blocks.length - 1]
 
-            // $('#content .block').last().css({
-            //     height: $('#content').height() - 30
-            // })
+            content.querySelector('.buffer').style.height = content.clientHeight - (article.scrollHeight - lastBlock.offsetTop) - 20 + 'px'
         },
         clearStorage () {
             for (let key in window.localStorage) {
@@ -194,38 +204,23 @@ export default {
             location.reload()
         }
     },
-    watch: {
-
-    },
     created () {
-
+        this.getMenuList()
+        this.getOptionListAndContent(this.menu.id)
     },
     mounted () {
         document.querySelector('#content').addEventListener('scroll', () => {
-            this.selectOption()
-            this.contentResize()
+            this.refreshOptionSelected()
         })
 
-        // document.querySelector('#option').addEventListener('click', (e) => {
-        //     if (e.target.tagName.toLowerCase() !== 'span') {
-        //         return
-        //     }
-
-        //     let index = $(this).attr('data-order')
-        //     let moveTo = $('#content .block').eq(index).position().top - $('#content .block').eq(0).position().top
-
-        //     $('#content').stop().animate({
-        //         scrollTop: moveTo
-        //     }, 750)
-        // })
-
-        this.getMenuList()
+        document.querySelector('#content').addEventListener('resize', () => {
+            this.refreshOptionSelected()
+            this.resizeBuffer()
+        })
     },
     updated () {
-
-    },
-    beforeDestroy () {
-
+        this.refreshOptionSelected()
+        this.resizeBuffer()
     }
 }
 </script>
