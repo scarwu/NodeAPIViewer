@@ -1,40 +1,42 @@
-'use strict';
+'use strict'
 /**
  * Webpack Config
  *
- * @package     MHW Calculator
+ * @package     NodeJS API Viewer
  * @author      Scar Wu
  * @copyright   Copyright (c) Scar Wu (http://scar.tw)
  * @link        https://github.com/scarwu/MHWCalculator
  */
 
-const path = require('path');
-const webpackLodashPlugin = require('lodash-webpack-plugin');
-const webpackOptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
-const webpackMiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const webpackLodashPlugin = require('lodash-webpack-plugin')
+const webpackOptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const webpackMiniCssExtractPlugin = require('mini-css-extract-plugin')
+const vueLoaderPlugin = require('vue-loader/lib/plugin')
 
 function cssLoaders (options) {
-    options = options || {};
+    options = options || {}
 
     let cssLoader = {
         loader: 'css-loader',
         options: {
             sourceMap: options.sourceMap
         }
-    };
+    }
 
     let postcssLoader = {
         loader: 'postcss-loader',
         options: {
             sourceMap: options.sourceMap
         }
-    };
+    }
 
     // generate loader string to be used with extract text plugin
     function generateLoaders (loader, loaderOptions) {
         let loaders = options.usePostCSS
             ? [cssLoader, postcssLoader]
-            : [cssLoader];
+            : [cssLoader]
 
         if (loader) {
             loaders.push({
@@ -42,16 +44,16 @@ function cssLoaders (options) {
                 options: Object.assign({}, loaderOptions, {
                     sourceMap: options.sourceMap
                 })
-            });
+            })
         }
 
         // Extract CSS when that option is specified
         // (which is the case during production build)
-        return [webpackMiniCssExtractPlugin.loader].concat(loaders);
+        return [webpackMiniCssExtractPlugin.loader].concat(loaders)
         // if (options.extract) {
-        //     return [webpackMiniCssExtractPlugin.loader].concat(loaders);
+        //     return [webpackMiniCssExtractPlugin.loader].concat(loaders)
         // } else {
-        //     return ['vue-style-loader'].concat(loaders);
+        //     return ['vue-style-loader'].concat(loaders)
         // }
     }
 
@@ -64,24 +66,24 @@ function cssLoaders (options) {
         scss: generateLoaders('sass'),
         stylus: generateLoaders('stylus'),
         styl: generateLoaders('stylus')
-    };
+    }
 }
 
 // Generate loaders for standalone style files (outside of .vue)
 function styleLoaders (options) {
-    let output = [];
-    let loaders = cssLoaders(options);
+    let output = []
+    let loaders = cssLoaders(options)
 
     for (let extension in loaders) {
-        let loader = loaders[extension];
+        let loader = loaders[extension]
 
         output.push({
             test: new RegExp('\\.' + extension + '$'),
             use: loader
-        });
+        })
     }
 
-    return output;
+    return output
 }
 
 module.exports = {
@@ -178,5 +180,29 @@ module.exports = {
             //     }
             // }
         ]
-    }
+    },
+    plugins: [
+        new vueLoaderPlugin(),
+        ...((process.env.NODE_ENV !== 'production') ? [
+            // new webpack.HotModuleReplacementPlugin(),
+            // new webpack.NamedModulesPlugin(),
+            // new webpack.NoEmitOnErrorsPlugin()
+        ] : []),
+        new webpack.HashedModuleIdsPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpackMiniCssExtractPlugin({
+            filename: 'css/[name].css'
+        }),
+        new webpackOptimizeCSSPlugin({
+            cssProcessorOptions: (process.env.NODE_ENV !== 'production')
+                ? { safe: true, map: { inline: false } }
+                : { safe: true }
+        }),
+        new webpackLodashPlugin({
+            caching: true,
+            collections: true,
+            paths: true,
+            shorthands: true
+        })
+    ],
 }
