@@ -26,8 +26,8 @@ div#app
         div#content
             div.article(v-html="content")
             div.buffer
-    div#mask
-        i.fas.fa-circle-notch.fa-spin
+    div#mask(v-show="isLoading")
+        //- i.fas.fa-circle-notch.fa-spin
 </template>
 
 <script>
@@ -154,9 +154,20 @@ export default {
                 return
             }
 
+            content.querySelector('.buffer').style.height = '0px'
+
             let article = content.querySelector('.article')
             let blocks = article.querySelectorAll('h1, h2, h3')
+
+            if (Helper.isEmpty(blocks)) {
+                return
+            }
+
             let lastBlock = blocks[blocks.length - 1]
+
+            if (Helper.isEmpty(lastBlock)) {
+                return
+            }
 
             content.querySelector('.buffer').style.height = content.clientHeight - (article.scrollHeight - lastBlock.offsetTop) - 20 + 'px'
         },

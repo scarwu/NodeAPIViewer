@@ -1,67 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta property="og:description" name="description" content="NodeJS API Viewer">
     <meta property="og:title" content="NodeJS API Viewer">
-    <meta property="og:url" content="http://scar.tw/NodeAPIViewer/">
-    <meta property="og:image" content="http://scar.tw/images/icon.jpg">
+    <meta property="og:url" content="https://scar.tw/NodeAPIViewer/">
+    <meta property="og:image" content="https://scar.tw/images/icon.jpg">
     <meta property="og:type" content="website">
 
     <title>NodeJS API Viewer</title>
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="canonical" href="http://scar.tw/NodeAPIViewer/">
+    <link rel="canonical" href="https://scar.tw/NodeAPIViewer/">
     <link rel="author" href="https://plus.google.com/+ScarWu">
-    <link rel="image_src" href="http://scar.tw/images/icon.jpg">
-    <link rel="shortcut icon" href="http://scar.tw/favicon.ico">
+    <link rel="image_src" href="https://scar.tw/images/icon.jpg">
+    <link rel="shortcut icon" href="https://scar.tw/favicon.ico">
+    <link rel="stylesheet" href="./assets/styles/main.min.css?1568689006093">
+
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'UA-30675094-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async></script>
 </head>
 <body>
-    <header>
-        <h1>NodeJS API Viewer</h1>
-        <span>by <a href="http://scar.tw" target="_blank">ScarWu</a>,
-            API Data from <a href="http://nodejs.org/api/" target="_blank">Node.js Manual & Documentation</a>,
-            and Source code on the <a href="https://github.com/scarwu/NodeAPIViewer" target="_blank">GitHub</a>.
-        </span>
-        <span id="social_tool">
-            <div class="twitter">
-                <a class="twitter-share-button" data-url="http://scar.tw/NodeAPIViwer/" data-text="NodeJS API Viewer" data-lang="en" data-via="xneriscool"></a>
-            </div>
-            <div class="facebook">
-                <div class="fb-like" data-href="http://scar.tw/NodeAPIViwer/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
-            </div>
-            <div class="google">
-                <div class="g-plusone" data-href="http://scar.tw/NodeAPIViwer/" data-size="medium"></div>
-            </div>
-        </span>
-        <span id="clear">Clear Cache</span>
-    </header>
-
-    <div id="main">
-        <div id="nav"></div>
-        <div id="item"></div>
-        <div id="content"></div>
-    </div>
-
-    <div id="fb-root"></div>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-        function asyncLoad(src) {
-            var s = document.createElement('script');
-            s.src = src; s.async = true;
-            var e = document.getElementsByTagName('script')[0];
-            e.parentNode.insertBefore(s, e);
-        }
-        var _gaq = [['_setAccount', 'UA-30675094-1'], ['_trackPageview']];
-        asyncLoad(('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js');
-        asyncLoad('https://apis.google.com/js/plusone.js');
-        asyncLoad('//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1403512429930397&version=v2.0');
-        asyncLoad(('https:' == location.protocol ? 'https' : 'http') + '://platform.twitter.com/widgets.js');
-    </script>
+    <div id="app"></div>
+    <script src="./assets/scripts/main.min.js?1568689006093" async></script>
 </body>
 </html>

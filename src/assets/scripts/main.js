@@ -10,6 +10,7 @@
 
 // Load Libraries
 import Vue from 'vue'
+import * as Sentry from '@sentry/browser'
 
 // Load Config
 import Config from 'config'
