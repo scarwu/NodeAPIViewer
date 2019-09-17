@@ -2,7 +2,7 @@
 /**
  * Helper
  *
- * @package     MHW Calculator
+ * @package     NodeJS API Viewer
  * @author      Scar Wu
  * @copyright   Copyright (c) Scar Wu (http://scar.tw)
  * @link        https://github.com/scarwu/MHWCalculator
