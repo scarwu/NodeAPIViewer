@@ -27,85 +27,30 @@ div#app
             div.article(v-html="content")
             div.buffer
     div#mask
+        i.fas.fa-circle-notch.fa-spin
 </template>
 
 <script>
-import axios from 'axios'
-import marked from 'marked'
-import $ from 'jquery'
-import { mapActions, mapGetters } from 'vuex'
-
-const apiUrl = 'https://raw.githubusercontent.com/nodejs/node/master/doc/api'
-const contentType = {
-    miscs: true,
-    globals: true,
-    methods: true,
-    vars: true,
-    modules: true,
-    classes: true,
-    events: true,
-    properties: true,
-    options: true
-}
+// Load Helper
+import Helper from 'helper'
 
 export default {
     data () {
         return {
+            isLoading: false,
             menu: { list: [], id: null },
             option: { list: [], id: null },
             content: null
         }
     },
     methods: {
-        scrollTo (element, to, duration) {
-            let from = element.scrollTop
-            let currentTime = 0
-            let increment = 20
-
-            let animateScroll = () => {
-                currentTime += increment;
-
-                element.scrollTop = this.easeInOutQuad(currentTime, from, to, duration)
-
-                if (currentTime <= duration) {
-                    setTimeout(animateScroll, increment)
-                } else {
-                    element.scrollTop = to
-                }
-            }
-
-            animateScroll()
-        },
-        easeInOutQuad (currentTime, from, to, duration) {
-            currentTime /= duration / 2;
-
-            if (currentTime < 1) {
-                return (to - from) / 2 * currentTime * currentTime + from;
-            }
-
-            currentTime--;
-
-            return -(to - from) / 2 * (currentTime * (currentTime - 2) - 1) + from;
-        },
-        fetchData (target, callback) {
-            if (target in window.localStorage) {
-                callback && callback(window.localStorage[target])
-            } else {
-                axios.get(`${apiUrl}/${target}.md`).then((res) => {
-                    window.localStorage[target] = marked(res.data)
-
-                    callback && callback(window.localStorage[target])
-                }).catch((err) => {
-                    callback && callback(null)
-                })
-            }
-        },
-        getMenuList () {
+        getMenuList (callback) {
             this.menu = { list: [], id: null }
             this.option = { list: [], id: null }
             this.content = null
+            this.isLoading = true
 
-            this.fetchData('index', (html) => {
+            Helper.fetchData('index', (html) => {
                 if (null === html) {
                     return
                 }
@@ -126,20 +71,24 @@ export default {
                 menu.id = menu.list[0].value
 
                 this.menu = menu
+                this.isLoading = false
+
+                callback && callback()
             })
         },
         getOptionListAndContent (target) {
             let content = document.querySelector('#content')
 
-            if (undefined !== content && null !== content) {
-                this.scrollTo(content, 0, 750)
+            if (Helper.isNotEmpty(content)) {
+                Helper.scrollTo(content, 0, 750)
             }
 
             this.menu.id = target
             this.option = { list: [], id: null }
             this.content = null
+            this.isLoading = true
 
-            this.fetchData(target, (html) => {
+            Helper.fetchData(target, (html) => {
                 if (null === html) {
                     return
                 }
@@ -162,12 +111,17 @@ export default {
 
                 this.option = option
                 this.content = html
+                this.isLoading = false
             })
         },
         clickOption (target) {
             let content = document.querySelector('#content')
 
-            this.scrollTo(
+            if (Helper.isEmpty(content)) {
+                return
+            }
+
+            Helper.scrollTo(
                 content,
                 content.querySelector('#' + target).offsetTop,
                 750
@@ -175,6 +129,11 @@ export default {
         },
         refreshOptionSelected () {
             let content = document.querySelector('#content')
+
+            if (Helper.isEmpty(content)) {
+                return
+            }
+
             let blocks = content.querySelectorAll('h1, h2, h3')
             let lastId = false
 
@@ -190,6 +149,11 @@ export default {
         },
         resizeBuffer () {
             let content = document.querySelector('#content')
+
+            if (Helper.isEmpty(content)) {
+                return
+            }
+
             let article = content.querySelector('.article')
             let blocks = article.querySelectorAll('h1, h2, h3')
             let lastBlock = blocks[blocks.length - 1]
@@ -197,16 +161,13 @@ export default {
             content.querySelector('.buffer').style.height = content.clientHeight - (article.scrollHeight - lastBlock.offsetTop) - 20 + 'px'
         },
         clearStorage () {
-            for (let key in window.localStorage) {
-                window.localStorage.removeItem(key)
-            }
-
-            location.reload()
+            Helper.clearStorage()
         }
     },
     created () {
-        this.getMenuList()
-        this.getOptionListAndContent(this.menu.id)
+        this.getMenuList(() => {
+            this.getOptionListAndContent(this.menu.id)
+        })
     },
     mounted () {
         document.querySelector('#content').addEventListener('scroll', () => {

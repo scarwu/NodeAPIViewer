@@ -91,7 +91,7 @@ function copyAssetsImages() {
 }
 
 function copyVendorFonts() {
-    return gulp.src('node_modules/font-awesome/fonts/*.{otf,eot,svg,ttf,woff,woff2}')
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*.{otf,eot,svg,ttf,woff,woff2}')
         .pipe(gulp.dest('src/boot/assets/fonts/vendor'))
 }
 

@@ -11,6 +11,9 @@
 // Load Libraries
 import Vue from 'vue'
 
+// Load Config
+import Config from 'config'
+
 // Load App
 import App from 'app'
 
@@ -21,14 +24,15 @@ String.prototype.repeat = (times) => {
     return (new Array(times + 1)).join(this)
 }
 
-if (process.env.NODE_ENV === 'production') {
-  Sentry.configureScope(scope => {
-    scope.setLevel('error')
-  })
-  Sentry.init({
-    dsn: window._env.SENTRY_TRACKER_DSN,
-    release: window._env.SENTRY_TRACKER_VERSION
-  })
+// Set Sentry Endpoint
+if ('production' === Config.env) {
+    Sentry.configureScope((scope) => {
+        scope.setLevel('error');
+    });
+    Sentry.init({
+        dsn: 'https://199daa6b3c33469584a989d5dd31455b@sentry.io/1728931',
+        release: Config.buildTime
+    });
 }
 
 Vue.config.devtools = (process.env.NODE_ENV === 'development')
