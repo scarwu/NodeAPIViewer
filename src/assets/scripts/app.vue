@@ -8,7 +8,7 @@ div#app
             | and Source code on the <a href="https://github.com/scarwu/NodeAPIViewer" target="_blank">GitHub</a>.
         span.clear(@click="clearStorage")
             | Clear Cache
-    div#main
+    div#container
         div#menu
             span(
                 v-for="(data, index) in menu.list",
@@ -169,7 +169,7 @@ export default {
                 return
             }
 
-            content.querySelector('.buffer').style.height = content.clientHeight - (article.scrollHeight - lastBlock.offsetTop) - 20 + 'px'
+            content.querySelector('.buffer').style.height = content.clientHeight - (article.scrollHeight - lastBlock.offsetTop) + 'px'
         },
         clearStorage () {
             Helper.clearStorage()
@@ -189,6 +189,9 @@ export default {
             this.refreshOptionSelected()
             this.resizeBuffer()
         })
+
+        this.refreshOptionSelected()
+        this.resizeBuffer()
     },
     updated () {
         this.refreshOptionSelected()
