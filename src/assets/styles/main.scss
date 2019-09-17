@@ -130,7 +130,7 @@ $header-height: 50px;
     #menu,
     #option,
     #content {
-        overflow: scroll;
+        overflow: auto;
 
         &::-webkit-scrollbar {
             height: 10px;
