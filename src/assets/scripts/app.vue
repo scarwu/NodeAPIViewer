@@ -32,7 +32,7 @@ div#app
 
 <script>
 // Load Helper
-import Helper from 'helper'
+import Helper from 'core/helper'
 
 export default {
     data () {
@@ -112,6 +112,11 @@ export default {
                 this.option = option
                 this.content = html
                 this.isLoading = false
+
+                this.$nextTick(() => {
+                    this.refreshOptionSelected()
+                    this.resizeBuffer()
+                })
             })
         },
         clickOption (target) {

@@ -16,6 +16,9 @@ import marked from 'marked'
 import Config from 'config';
 import Constant from 'constant';
 
+// Load Status
+import Status from 'core/status'
+
 function log(...params) {
     if ('production' !== Config.env) {
         console.log.apply(this, params);
@@ -67,9 +70,9 @@ function fetchData(target, callback) {
         callback && callback(window.localStorage[target])
     } else {
         axios.get(`${Constant.apiUrl}/${target}.md`).then((res) => {
-            window.localStorage[target] = marked(res.data)
+            Status.set(target, marked(res.data))
 
-            callback && callback(window.localStorage[target])
+            callback && callback(Status.get(target))
         }).catch((err) => {
             callback && callback(null)
         })
@@ -77,9 +80,7 @@ function fetchData(target, callback) {
 }
 
 function clearStorage() {
-    for (let key in window.localStorage) {
-        window.localStorage.removeItem(key)
-    }
+    Status.clear()
 
     location.reload()
 }
