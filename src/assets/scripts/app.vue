@@ -192,10 +192,6 @@ export default {
 
         this.refreshOptionSelected()
         this.resizeBuffer()
-    },
-    updated () {
-        this.refreshOptionSelected()
-        this.resizeBuffer()
     }
 }
 </script>

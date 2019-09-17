@@ -124,6 +124,7 @@ $header-height: 50px;
 }
 
 #container {
+    position: relative;
     display: flex;
     height: calc(100vh - #{$border-height} - #{$header-height});
 
