@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Helper
  *
@@ -13,24 +13,24 @@ import axios from 'axios'
 import marked from 'marked'
 
 // Load Config & Constant
-import Config from 'config';
-import Constant from 'constant';
+import Config from 'config'
+import Constant from 'constant'
 
 // Load Status
 import Status from 'core/status'
 
 function log(...params) {
     if ('production' !== Config.env) {
-        console.log.apply(this, params);
+        console.log.apply(this, params)
     }
 }
 
 function isEmpty(variable) {
-    return (undefined === variable || null === variable);
+    return (undefined === variable || null === variable)
 }
 
 function isNotEmpty(variable) {
-    return (undefined !== variable && null !== variable);
+    return (undefined !== variable && null !== variable)
 }
 
 function scrollTo(element, to, duration) {
@@ -39,7 +39,7 @@ function scrollTo(element, to, duration) {
     let increment = 20
 
     let animateScroll = () => {
-        currentTime += increment;
+        currentTime += increment
 
         element.scrollTop = easeInOutQuad(currentTime, from, to, duration)
 
@@ -54,15 +54,15 @@ function scrollTo(element, to, duration) {
 }
 
 function easeInOutQuad(currentTime, from, to, duration) {
-    currentTime /= duration / 2;
+    currentTime /= duration / 2
 
     if (currentTime < 1) {
-        return (to - from) / 2 * currentTime * currentTime + from;
+        return (to - from) / 2 * currentTime * currentTime + from
     }
 
-    currentTime--;
+    currentTime--
 
-    return -(to - from) / 2 * (currentTime * (currentTime - 2) - 1) + from;
+    return -(to - from) / 2 * (currentTime * (currentTime - 2) - 1) + from
 }
 
 function fetchData(target, callback) {
@@ -92,4 +92,4 @@ export default {
     scrollTo: scrollTo,
     fetchData: fetchData,
     clearStorage: clearStorage
-};
+}

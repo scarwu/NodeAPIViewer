@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Status Libray
  *
@@ -8,36 +8,36 @@
  * @link        https://github.com/scarwu/MHWCalculator
  */
 
-let prefix = 'nav:170919';
-let storage = window.localStorage;
+let prefix = 'nav:170919'
+let storage = window.localStorage
 
 function get(key) {
     if (undefined === storage[`${prefix}:${key}`]) {
-        return undefined;
+        return undefined
     }
 
-    let dataSet = JSON.parse(storage[`${prefix}:${key}`]);
+    let dataSet = JSON.parse(storage[`${prefix}:${key}`])
 
-    return dataSet;
+    return dataSet
 }
 
 function set(key, value) {
     let dataSet = (undefined !== storage[`${prefix}:${key}`])
-        ? JSON.parse(storage[`${prefix}:${key}`]) : {};
+        ? JSON.parse(storage[`${prefix}:${key}`]) : {}
 
-    dataSet = value;
+    dataSet = value
 
-    storage[`${prefix}:${key}`] = JSON.stringify(dataSet);
+    storage[`${prefix}:${key}`] = JSON.stringify(dataSet)
 }
 
 function has(key) {
     if (undefined === storage[`${prefix}:${key}`]) {
-        return undefined;
+        return undefined
     }
 
-    let dataSet = JSON.parse(storage[`${prefix}:${key}`]);
+    let dataSet = JSON.parse(storage[`${prefix}:${key}`])
 
-    return undefined !== dataSet;
+    return undefined !== dataSet
 }
 
 function clear() {
@@ -55,4 +55,4 @@ export default {
     set: set,
     has: has,
     clear: clear
-};
+}
