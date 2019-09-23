@@ -186,13 +186,13 @@ export default {
         })
     },
     mounted () {
-        document.querySelector('#content').addEventListener('scroll', () => {
-            this.refreshOptionSelected()
-        })
-
-        document.querySelector('#content').addEventListener('resize', () => {
+        window.addEventListener('resize', () => {
             this.refreshOptionSelected()
             this.resizeBuffer()
+        })
+
+        document.querySelector('#content').addEventListener('scroll', () => {
+            this.refreshOptionSelected()
         })
 
         this.refreshOptionSelected()
