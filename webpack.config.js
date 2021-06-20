@@ -188,7 +188,7 @@ module.exports = {
             // new webpack.NamedModulesPlugin(),
             // new webpack.NoEmitOnErrorsPlugin()
         ] : []),
-        new webpack.HashedModuleIdsPlugin(),
+        new webpack.ids.HashedModuleIdsPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpackMiniCssExtractPlugin({
             filename: 'css/[name].css'
