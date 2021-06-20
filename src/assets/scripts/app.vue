@@ -60,7 +60,7 @@ export default {
                 let appendMenuItem = (node) => {
                     menu.list.push({
                         text: node.textContent,
-                        value: node.getAttribute('href').match(/(.+)\.html/)[1]
+                        value: node.getAttribute('href').match(/(.+)\.md/)[1]
                     })
                 }
 
