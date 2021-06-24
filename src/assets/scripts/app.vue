@@ -31,8 +31,9 @@ div#app
 </template>
 
 <script>
-// Load Helper
+
 import Helper from 'core/helper'
+import hljs from 'highlight.js'
 
 export default {
     data () {
@@ -116,6 +117,10 @@ export default {
                 this.$nextTick(() => {
                     this.refreshOptionSelected()
                     this.resizeBuffer()
+
+                    content.querySelectorAll('pre > code').forEach((node) => {
+                        hljs.highlightBlock(node);
+                    })
                 })
             })
         },
